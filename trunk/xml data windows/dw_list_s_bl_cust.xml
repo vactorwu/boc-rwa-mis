@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="datawindow.xsl"?>
+<datawindow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="grid" table="S_BL_CUST" updatable="false" xsi:noNamespaceSchemaLocation="list.xsd" product="F">
+  <sql>
+    SELECT dttype, syscde, areano, cusidt, cusdes, custtp, incotry,
+		       rateagy1, rating1, totsale, totasst, ccycode, induscde, defaulttp
+    FROM   s_bl_cust
+    where  dttype = 'I'
+    and    areano = pack_boc_bl.get_user_areano
+  </sql>
+  <columns>
+    <column name="dttype" label="补录类型" />
+    <column name="syscde" key="true" label="源系统代码" />
+    <column name="areano" key="true" label="区域号" />
+    <column name="cusidt" key="true" label="客户号"/>
+    <column name="cusdes" label="客户名称" />
+    <column name="custtp" label="客户类型" />
+    <column name="incotry" label="客户注册国" />
+    <column name="rateagy1" label="评级机构1" />
+    <column name="rating1" label="评级机构1评级" />
+    <column name="totsale" label="去年营业收入（单位：元）" />
+    <column name="totasst" label="去年末总资产（单位：元）" />
+    <column name="ccycode" label="币种" />
+    <column name="induscde" label="行业别" />
+    <column name="defaulttp" label="客户是否违约" />
+  </columns>
+</datawindow>
