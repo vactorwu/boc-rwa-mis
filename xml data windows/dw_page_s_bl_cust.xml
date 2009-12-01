@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="datawindow.xsl"?>
+<datawindow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="page" product="F" table="s_bl_cust" updatable="true" xsi:noNamespaceSchemaLocation="page.xsd">
+	<sql>
+		<retrieval name="syscde" type="string"/>
+		<retrieval name="areano" type="string"/>
+    <retrieval name="cusidt" type="string"/>
+		<query>
+		  SELECT dttype, syscde, areano, cusidt, cusdes, custtp, incotry,
+		         rateagy1, rating1, rateagy2, rating2, rateagy3, rating3, rateagy4, rating4,
+		         totsale, totasst, ccycode, induscde, defaulttp
+      FROM s_bl_cust WHERE syscde=:syscde and areano=:areano and cusidt=:cusidt
+		</query>
+	</sql>
+	<columns>
+	  <panel title=" ">
+	    <panel nbcols="2">
+        <column name="dttype" label="补录类型" always_show_arrow="true" displayonly="true"> 
+					<values>
+						<value data="I" display="新增"/>
+					</values>
+	      </column>
+	      <column name="syscde" label="源系统代码" always_show_arrow="true" key="true">
+          <dddw display_column="description" data_column="code">
+            <sql>SELECT syscde code, description FROM s_bl_syscde ORDER BY syscde</sql>
+          </dddw>
+	      </column>
+	      <column name="areano" label="区域号" always_show_arrow="true" key="true">
+          <dddw display_column="description" data_column="code">
+            <sql>SELECT areano code, description FROM s_bl_areano ORDER BY areano</sql>
+          </dddw>
+	      </column>
+	    </panel>
+	    <panel nbcols="2">
+	      <column name="cusidt" label="客户号" alignment="left" key="true" bold="true" />
+	      <text>注：中银定义的客户号 </text>
+		    <column name="cusdes" label="客户名称" />
+		    <text>注：合同上的正式名称 </text>
+		    <column name="custtp" label="客户类型" always_show_arrow="true" >
+	        <dddw display_column="description" data_column="code">
+	          <sql>SELECT custtp code, description FROM s_bl_custtp ORDER BY custtp</sql>
+	        </dddw>
+	      </column>
+		    <column name="incotry" label="客户注册国" always_show_arrow="true" >
+          <dddw display_column="description" data_column="code">
+            <sql>SELECT incotry code, description FROM s_bl_incotry </sql>
+          </dddw>
+	      </column>
+	    </panel>
+	    <panel nbcols="2">
+        <column name="rateagy1" label="评级机构1" always_show_arrow="true"> 
+          <dddw display_column="description" data_column="code">
+            <sql>SELECT rateagy code, description FROM s_bl_rateagy WHERE rateagy = 'INTERNAL' ORDER BY rateagy</sql>
+          </dddw>
+	      </column>
+        <column name="rating1" label="评级机构1评级" always_show_arrow="true"> 
+          <dddw display_column="description" data_column="code">
+            <sql contextual="ture">SELECT rating code, rating description FROM s_bl_rating WHERE rateagy = :rateagy1 ORDER BY RATING_ORDER</sql>
+          </dddw>
+	      </column>
+        <column name="rateagy2" label="评级机构2" always_show_arrow="true"> 
+          <dddw display_column="description" data_column="code">
+            <sql>SELECT rateagy code, description FROM s_bl_rateagy ORDER BY rateagy</sql>
+          </dddw>
+	      </column>
+        <column name="rating2" label="评级机构2评级" always_show_arrow="true"> 
+          <dddw display_column="description" data_column="code">
+            <sql contextual="ture">SELECT rating code, rating description FROM s_bl_rating WHERE rateagy = :rateagy2 ORDER BY RATING_ORDER</sql>
+          </dddw>
+	      </column>
+        <column name="rateagy3" label="评级机构3" always_show_arrow="true"> 
+          <dddw display_column="description" data_column="code">
+            <sql>SELECT rateagy code, description FROM s_bl_rateagy ORDER BY rateagy</sql>
+          </dddw>
+	      </column>
+        <column name="rating3" label="评级机构3评级" always_show_arrow="true"> 
+          <dddw display_column="description" data_column="code">
+            <sql contextual="ture">SELECT rating code, rating description FROM s_bl_rating WHERE rateagy = :rateagy3 ORDER BY RATING_ORDER</sql>
+          </dddw>
+	      </column>
+        <column name="rateagy4" label="评级机构4" always_show_arrow="true"> 
+          <dddw display_column="description" data_column="code">
+            <sql>SELECT rateagy code, description FROM s_bl_rateagy ORDER BY rateagy</sql>
+          </dddw>
+	      </column>
+        <column name="rating4" label="评级机构4评级" always_show_arrow="true"> 
+          <dddw display_column="description" data_column="code">
+            <sql contextual="ture">SELECT rating code, rating description FROM s_bl_rating WHERE rateagy = :rateagy4 ORDER BY RATING_ORDER</sql>
+          </dddw>
+	      </column>
+	    </panel>
+	    <column name="totsale" label="去年营业收入（单位：元）" />
+	    <column name="totasst" label="去年末总资产（单位：元）" />
+	    <column name="ccycode" label="币种" always_show_arrow="true" key="true">
+        <dddw display_column="description" data_column="code">
+          <sql>SELECT curcde code, description FROM s_bl_curcde order by curcde_order, curcde</sql>
+        </dddw>
+	    </column>
+	    <column name="induscde" label="行业别" always_show_arrow="true" key="true">
+        <dddw display_column="description" data_column="code">
+          <sql>SELECT induscde code, description FROM s_bl_induscde ORDER BY induscde</sql>
+        </dddw>
+	    </column>
+	    <panel nbcols="2">
+		    <column name="defaulttp" label="交易对手是否违约">
+		        <checkbox on="T" off="F" />
+		    </column>
+		    <text>是（逾期大于等于90天或属于五级分类后两类） </text>
+	    </panel>
+	  </panel>
+	</columns>
+</datawindow>
